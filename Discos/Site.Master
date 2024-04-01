@@ -1,0 +1,162 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Discos.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9021/9021114.png" type="image/x-icon">
+
+    <title>DISCOS DB</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+            * {
+                font-family: "Roboto", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+
+            body {
+                background-color: #fafafa;
+            }
+        </style>
+        <div>
+
+
+            <nav class="navbar navbar-expand-lg navbar-scroll shadow-0" style="background-color: #f5f5f5;">
+                <div class="container">
+                    <a class="navbar-brand" href="Default.aspx">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9021/9021114.png" alt="Discos DB" width="30" height="30" class="d-inline-block align-text-top">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item active">
+                                <a class="nav-link px-3" href="Default.aspx">Inicio</a>
+                            </li>
+                            <%if ((Session["user"] != null && negocio.UserNegocio.isAdmin((dominio.User)Session["user"])))
+                                {%>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="AgregarDisco.aspx">Agregar disco</a>
+                            </li>
+                            <%}%>
+
+                            <% if (Session["user"] != null) %>
+                            <%{%>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="Perfil.aspx">Mi perfil</a>
+                            </li>
+                            <% }%>
+                        </ul>
+
+
+                        <% if (Session["user"] != null) %>
+                        <%{%>
+                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="Default.aspx?logout=1">Cerrar sesión</a>
+                            </li>
+
+                        </ul>
+                        <% }%>
+
+                        <%else
+                            {  %>
+                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="Login.aspx">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="SignUp.aspx">Registrarse</a>
+                            </li>
+                        </ul>
+                        <%}%>
+
+
+                        <%--                        <ul class="navbar-nav flex-row">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="Login.aspx">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="SignUp.aspx">Registrarse</a>
+                            </li>
+                        </ul>--%>
+                    </div>
+                </div>
+            </nav>
+
+
+
+
+
+
+
+            <%--BACK UP--%>
+
+            <%--<nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+
+                    <a class="navbar-brand" href="#">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9021/9021114.png" alt="Discos" width="30" height="30" class="d-inline-block align-text-top">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="Default.aspx">Inicio</a>
+                            </li>
+                            <%if ((Session["user"] != null && negocio.UserNegocio.isAdmin((dominio.User)Session["user"])))
+                                {%>
+                            <li>
+                                <a class="nav-link" href="AgregarDisco.aspx">Agregar disco</a>
+                            </li>
+                            <%}%>
+
+                            <% if (Session["user"] != null) %>
+                            <%{%>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Default.aspx?logout=1">Cerrar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Perfil.aspx">Mi perfil</a>
+                            </li>
+                            <% }%>
+
+                            <%else
+                                {  %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Login.aspx">Iniciar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="SignUp.aspx">Registrarse</a>
+                            </li>
+                            <%}%>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>--%>
+
+
+
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+
+        </div>
+    </form>
+</body>
+</html>
